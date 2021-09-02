@@ -61,7 +61,8 @@ RUN curl -fsSL https://github.com/ANTsX/ANTs/archive/v2.3.4.tar.gz \
         .. \
     && make -j $MAKE_JOBS \
     && cd ANTS-build \
-    && make install
+    && make install \
+    && cp /src/ants/ANTSCopyright.txt /opt/ants/
 
 # Install FreeSurfer LUT
 FROM base-builder AS freesurfer-installer
@@ -114,6 +115,7 @@ RUN apt-get -qq update \
         libtiff5 \
         pigz \
         python3-distutils \
+        tree \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=mrtrix3-builder /opt/mrtrix3 /opt/mrtrix3
